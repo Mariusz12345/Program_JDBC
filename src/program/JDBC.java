@@ -14,12 +14,11 @@ public class JDBC {
 	private final static String userHaslo = "maniek1";
 	private final static String driver = "org.postgresql.Driver";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		// LADOWANIE STEROWNIKA
 
 		Connection conn = null;
 		Statement s = null;
-		
 		System.out.print("Sprawdzanie sterownika:");
 		try {
 			Class.forName(driver).newInstance();
@@ -41,8 +40,14 @@ public class JDBC {
 		}
 		System.out.print(" polaczenie OK\n");
 		
+		// Dodanie do bazy danych
+		s = conn.createStatement();
+		
+		
+		 
 		
 		// ZAMYKANIE POLACZENIA Z BAZA
+		
 				System.out.print("\nZamykanie polaczenia z baza:");
 				try {
 					s.close();
