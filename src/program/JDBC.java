@@ -9,7 +9,7 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 
 public class JDBC {
-	private final static String url = "jdbc:postgresql://localhost:5432/test";
+	private final static String url = "jdbc:postgresql://localhost:5432/test3";
 	private final static String userBazyDanych = "postgres";
 	private final static String userHaslo = "maniek1";
 	private final static String driver = "org.postgresql.Driver";
@@ -43,8 +43,8 @@ public class JDBC {
 		// Dodanie do bazy danych
 		s = conn.createStatement();
 		
-		
-		 
+		String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('f', 'o')";
+		 s.execute(zapytanie);
 		
 		// ZAMYKANIE POLACZENIA Z BAZA
 		
