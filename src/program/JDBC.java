@@ -2,10 +2,8 @@ package program;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.SQLWarning;
+
 import java.sql.Statement;
 
 public class JDBC {
@@ -17,11 +15,12 @@ public class JDBC {
 	public static void main(String[] args) throws SQLException {
 		// LADOWANIE STEROWNIKA
 
-		Connection conn = null;
+		Connection connetion = null;
+		//Zapytania do bazy danych za pomoca "Statement"
 		Statement s = null;
 		System.out.print("Sprawdzanie sterownika:");
 		try {
-			Class.forName(driver).newInstance();
+			Class.forName(driver).newInstance(); // Zaladowanie sterownika do systemu
 		} catch (Exception e) {
 			System.out.println("Blad przy ladowaniu sterownika bazy!");
 			System.exit(1);
@@ -32,31 +31,33 @@ public class JDBC {
 		System.out.print("\nLaczenie z baza danych:");
 
 		try {
-			conn = DriverManager.getConnection(url, userBazyDanych, userHaslo);
+			connetion = DriverManager.getConnection(url, userBazyDanych, userHaslo); // polaczenie z baza danych
 
 		} catch (SQLException e) {
 			System.out.println("Blad przy ladowaniu sterownika bazy!");
 			System.exit(1);
 		}
 		System.out.print(" polaczenie OK\n");
-		
+
 		// Dodanie do bazy danych
-		s = conn.createStatement();
+		s = connetion.createStatement();
 		
-		String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('f', 'o')";
-		 s.execute(zapytanie);
-		
+		String createTableFaktury = "CREATE TABLE faktury(id_faktury INTEGER PRIMARY KEY,nazwaFaktury VARCHAR )";
+		String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('y', 'j')";
+		s.execute(zapytanie);
+		s.execute(createTableFaktury);
+
 		// ZAMYKANIE POLACZENIA Z BAZA
-		
-				System.out.print("\nZamykanie polaczenia z baza:");
-				try {
-					s.close();
-					conn.close();
-				} catch (SQLException e) {
-					System.out.println("Blad przy zamykaniu polaczenia " +e.toString());
-					System.exit(4);
-				}
-				System.out.print(" zamkniecie OK");
+
+		System.out.print("\nZamykanie polaczenia z baza:");
+		try {
+			s.close();
+			connetion.close();
+		} catch (SQLException e) {
+			System.out.println("Blad przy zamykaniu polaczenia " + e.toString());
+			System.exit(4);
+		}
+		System.out.print(" zamkniecie OK");
 
 	}
 }
