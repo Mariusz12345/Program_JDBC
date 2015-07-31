@@ -18,6 +18,8 @@ public class JDBC {
 		// LADOWANIE STEROWNIKA
 
 		Connection conn = null;
+		Statement s = null;
+		
 		System.out.print("Sprawdzanie sterownika:");
 		try {
 			Class.forName(driver).newInstance();
@@ -38,6 +40,18 @@ public class JDBC {
 			System.exit(1);
 		}
 		System.out.print(" polaczenie OK\n");
+		
+		
+		// ZAMYKANIE POLACZENIA Z BAZA
+				System.out.print("\nZamykanie polaczenia z baza:");
+				try {
+					s.close();
+					conn.close();
+				} catch (SQLException e) {
+					System.out.println("Blad przy zamykaniu polaczenia " +e.toString());
+					System.exit(4);
+				}
+				System.out.print(" zamkniecie OK");
 
 	}
 }
