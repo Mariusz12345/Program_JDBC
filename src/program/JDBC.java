@@ -3,8 +3,9 @@ package program;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 import java.sql.Statement;
+
+
 
 public class JDBC {
 	private final static String url = "jdbc:postgresql://localhost:5432/test3";
@@ -12,9 +13,10 @@ public class JDBC {
 	private final static String userHaslo = "maniek1";
 	private final static String driver = "org.postgresql.Driver";
 
-	public static void main(String[] args) throws SQLException {
-		// LADOWANIE STEROWNIKA
 
+	public static void main(String[] args) throws Exception {
+		// LADOWANIE STEROWNIKA
+		
 		Connection connetion = null;
 		//Zapytania do bazy danych za pomoca "Statement"
 		Statement s = null;
@@ -27,7 +29,7 @@ public class JDBC {
 		}
 		System.out.print(" sterownik OK");
 
-		// LACZENIE Z BAZA
+		// laczenie z baza danych
 		System.out.print("\nLaczenie z baza danych:");
 
 		try {
@@ -39,14 +41,19 @@ public class JDBC {
 		}
 		System.out.print(" polaczenie OK\n");
 
-		// Dodanie do bazy danych
-		s = connetion.createStatement();
 		
-		String createTableFaktury = "CREATE TABLE faktury(id_faktury INTEGER PRIMARY KEY,nazwaFaktury VARCHAR )";
-		String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('y', 'j')";
+		//~~~~~~~~~~~~~~~ Dodanie do bazy danych ~~~~~~~~~~~~
+		connetion.setAutoCommit(false);
+		s = connetion.createStatement();
+		connetion.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+		
+		//String createTableFaktury = "CREATE TABLE faktury(id_faktury INTEGER PRIMARY KEY,nazwaFaktury VARCHAR )";
+		String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('p', 'p')";
 		s.execute(zapytanie);
-		s.execute(createTableFaktury);
-
+		connetion.commit();
+		
+		//~~~~~~~~~~~~~~ Koniec dodania ~~~~~~~~~~~~~~~~~~~
+	
 		// ZAMYKANIE POLACZENIA Z BAZA
 
 		System.out.print("\nZamykanie polaczenia z baza:");
