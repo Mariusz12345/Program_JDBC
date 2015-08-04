@@ -13,10 +13,9 @@ public class KlientMenadzer {
 		s = conn.createStatement();
 		conn.setAutoCommit(false);
 
-		String zapytanie = "INSERT INTO klient (imie,nazwisko)VALUES('f','f')";
+		String zapytanie = "INSERT INTO klient (imie,nazwisko)VALUES('c','c')";
 		s.execute(zapytanie);
-
-		conn.commit();
+		
 		return s;
 	}
 	
@@ -52,6 +51,8 @@ public class KlientMenadzer {
 				}
 				System.out.println();
 			}
+			
+			
 		} catch (SQLException e) {
 			System.out.println("Blad odczytu z bazy! " + e.toString());
 			System.exit(3);

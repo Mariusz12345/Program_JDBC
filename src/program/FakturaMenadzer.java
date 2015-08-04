@@ -14,16 +14,16 @@ public class FakturaMenadzer   {
 		s = conn.createStatement();
 		conn.setAutoCommit(false);
 		
-		String zapytanie = "INSERT INTO faktury(id_faktury,nazwafaktury)VALUES('5','jacek5')";
+		String zapytanie = "INSERT INTO faktury(id_faktury,nazwafaktury)VALUES('8','jacek8')";
 		s.execute(zapytanie);
-
-		conn.commit();
 		
 		return s;
 		
 	}
 	
 	public  void wypisFaktury(Connection conn , Statement s) throws SQLException{
+		
+		conn.setAutoCommit(false);
 		s = conn.createStatement();
 		System.out.println("Pobieranie danych z bazy:");
 		s = null;
@@ -55,6 +55,8 @@ public class FakturaMenadzer   {
 				}
 				System.out.println();
 			}
+			
+			
 		} catch (SQLException e) {
 			System.out.println("Blad odczytu z bazy! " + e.toString());
 			System.exit(3);

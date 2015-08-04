@@ -16,7 +16,8 @@ public class JDBC {
 		
 
 		Connection conn = null;
-		Statement s = null;
+		Statement s1 = null;
+		Statement s2 = null;
 		
 		// ~~~~~~~~~~~~~~~~~~~~~~~ Polaczenie z baza danych ~~~~~~~~~~~~~~~~~~~~~~~// 
 		
@@ -42,25 +43,27 @@ public class JDBC {
 
 		// ~~~~~~~~~~~~~~~~~~~~~~~ Koniec polaczenia ~~~~~~~~~~~~~~~~~~~~~~~//
 		
-		
-		
 		FakturaMenadzer f = new FakturaMenadzer();
 		KlientMenadzer k = new KlientMenadzer();
 		
-		s = f.dodanieFaktury(conn, s);
-		s = k.dodanieKlienta(conn, s);
-		f.wypisFaktury(conn, s);
-		k.wypisKlientow(conn, s);
-
+	
+		s1 = f.dodanieFaktury(conn, s1);
+		s2 = k.dodanieKlienta(conn, s2);
+		f.wypisFaktury(conn, s1);
+		k.wypisKlientow(conn, s2);
 		
 		
+		
+		conn.commit();
 
+		
 
 		// Zamykanie polaczenia z baza danych
 
 		System.out.print("\nZamykanie polaczenia z baza:");
 		try {
-			s.close();
+			s1.close();
+			s2.close();
 			conn.close();
 		} catch (SQLException e) {
 			System.out.println("Blad przy zamykaniu polaczenia " + e.toString());
