@@ -8,19 +8,19 @@ import java.sql.Statement;
 
 public class KlientMenadzer {
 
-	public static Statement dodanieKlienta(Connection conn, Statement s) throws SQLException {
+	public  Statement dodanieKlienta(Connection conn, Statement s) throws SQLException {
 
 		s = conn.createStatement();
 		conn.setAutoCommit(false);
 
-		String zapytanie = "INSERT INTO klient (imie,nazwisko)VALUES('c','c')";
+		String zapytanie = "INSERT INTO klient (imie,nazwisko)VALUES('v','v')";
 		s.execute(zapytanie);
 
 		conn.commit();
 		return s;
 	}
 	
-	public static void wypisKlientow(Connection conn , Statement s) throws SQLException{
+	public  void wypisKlientow(Connection conn , Statement s) throws SQLException{
 		s = conn.createStatement();
 		System.out.println("Pobieranie danych z bazy:");
 		s = null;

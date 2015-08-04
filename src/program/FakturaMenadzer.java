@@ -9,12 +9,12 @@ import java.sql.Statement;
 public class FakturaMenadzer   {
 	
 	
-	public static Statement dodanieFaktury(Connection conn , Statement s) throws SQLException{
+	public  Statement dodanieFaktury(Connection conn , Statement s) throws SQLException{
 		
 		s = conn.createStatement();
 		conn.setAutoCommit(false);
 		
-		String zapytanie = "INSERT INTO faktury(id_faktury,nazwafaktury)VALUES('55','bxek')";
+		String zapytanie = "INSERT INTO faktury(id_faktury,nazwafaktury)VALUES('4','jacek4')";
 		s.execute(zapytanie);
 
 		conn.commit();
@@ -23,7 +23,7 @@ public class FakturaMenadzer   {
 		
 	}
 	
-	public static void wypisFaktury(Connection conn , Statement s) throws SQLException{
+	public  void wypisFaktury(Connection conn , Statement s) throws SQLException{
 		s = conn.createStatement();
 		System.out.println("Pobieranie danych z bazy:");
 		s = null;

@@ -40,12 +40,12 @@ public class JDBC {
 		}
 		System.out.print(" polaczenie OK\n");
 
-		
-		
-		s = FakturaMenadzer.dodanieFaktury(conn, s);
-		s = KlientMenadzer.dodanieKlienta(conn, s);
-		FakturaMenadzer.wypisFaktury(conn, s);
-		KlientMenadzer.wypisKlientow(conn, s);
+		FakturaMenadzer f = new FakturaMenadzer();
+		KlientMenadzer k = new KlientMenadzer();
+		s = f.dodanieFaktury(conn, s);
+		s = k.dodanieKlienta(conn, s);
+		f.wypisFaktury(conn, s);
+		k.wypisKlientow(conn, s);
 
 		
 		
