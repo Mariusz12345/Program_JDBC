@@ -2,10 +2,7 @@ package program;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.sql.Statement;
 
 public class JDBC {
@@ -15,6 +12,8 @@ public class JDBC {
 	private final static String driver = "org.postgresql.Driver";
 
 	public static void main(String[] args) throws Exception {
+		
+		
 		// LADOWANIE STEROWNIKA
 
 		Connection conn = null;
@@ -45,27 +44,12 @@ public class JDBC {
 		
 		s = FakturaMenadzer.dodanieFaktury(conn, s);
 		s = KlientMenadzer.dodanieKlienta(conn, s);
-
+		FakturaMenadzer.wypisFaktury(conn, s);
+		KlientMenadzer.wypisKlientow(conn, s);
 
 		
 		
-		// rollback i savepoint
 
-		s = conn.createStatement();
-
-		Savepoint save1 = conn.setSavepoint("INSERT_INTO");
-		String zapytanie3 = "INSERT INTO klient (imie,nazwisko) VALUES ('d','d')";
-		s.executeUpdate(zapytanie3);
-
-		Savepoint save2 = conn.setSavepoint("INSERT_INTO2");
-		String zapytanie4 = "INSERT INTO faktury(id_faktury,nazwafaktury) VALUES ('10','poli')";
-		s.executeUpdate(zapytanie4);
-
-		conn.rollback(save2);
-
-		conn.commit();
-
-		// koniec rollback
 
 		// ZAMYKANIE POLACZENIA Z BAZA
 
