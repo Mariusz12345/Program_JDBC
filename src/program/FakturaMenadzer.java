@@ -14,7 +14,7 @@ public class FakturaMenadzer   {
 		s = conn.createStatement();
 		conn.setAutoCommit(false);
 		
-		String zapytanie = "INSERT INTO faktury(id_faktury,nazwafaktury)VALUES('4','jacek4')";
+		String zapytanie = "INSERT INTO faktury(id_faktury,nazwafaktury)VALUES('5','jacek5')";
 		s.execute(zapytanie);
 
 		conn.commit();
@@ -28,23 +28,23 @@ public class FakturaMenadzer   {
 		System.out.println("Pobieranie danych z bazy:");
 		s = null;
 		try {
-			s = conn.createStatement(); // tworzenie obiektu Statement
-										// przesylajacego zapytania do bazy conn
+			s = conn.createStatement(); // Tworzenie obiektu Statement
+										// Przesylajacego zapytania do bazy conn
 			ResultSet r;
-			r = s.executeQuery("Select * from faktury;"); // wykonanie kwerendy i przeslanianie wynikow do obiektu ResultSet
+			r = s.executeQuery("Select * from faktury;"); // Wykonanie kwerendy i przeslanianie wynikow do obiektu ResultSet
 														
-			r.next(); // przejscie do kolejnego rekordu (wiersza) otrzymanych wynikow
+			r.next(); // Przejscie do kolejnego rekordu (wiersza) 
 
 			ResultSetMetaData rsmd = r.getMetaData();
-			int iloscikolumn = rsmd.getColumnCount(); // pobieranie liczby kolumn
+			int iloscikolumn = rsmd.getColumnCount(); // Pobieranie liczby kolumn
 
-			// wyswietlanie nazw kolumn:
-			for (int i = 1; i <= iloscikolumn; i++) {
+			//Wyswietlenie nazw kolumn
+			for (int i = 1; i <= iloscikolumn; i++) { 
 				System.out.print(rsmd.getColumnLabel(i) + "  |  ");
 			}
 			System.out.print("\n------------------------------------\n");
 
-			// wyswietlanie kolejnych rekordow:
+			// Wyswietlanie kolejnych rekordow
 			while (r.next()) {
 				for (int i = 1; i <= iloscikolumn; i++) {
 					Object obj = r.getObject(i);

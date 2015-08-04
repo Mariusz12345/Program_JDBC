@@ -14,11 +14,12 @@ public class JDBC {
 	public static void main(String[] args) throws Exception {
 		
 		
-		// LADOWANIE STEROWNIKA
 
 		Connection conn = null;
-		// Zapytania do bazy danych za pomoca "Statement"
 		Statement s = null;
+		
+		// ~~~~~~~~~~~~~~~~~~~~~~~ Polaczenie z baza danych ~~~~~~~~~~~~~~~~~~~~~~~// 
+		
 		System.out.print("Sprawdzanie sterownika:");
 		try {
 			Class.forName(driver).newInstance(); // Zaladowanie sterownika do systemu
@@ -28,20 +29,24 @@ public class JDBC {
 		}
 		System.out.print(" sterownik OK");
 
-		// laczenie z baza danych
+		
 		System.out.print("\nLaczenie z baza danych:");
 
 		try {
-			conn = DriverManager.getConnection(url, userBazyDanych, userHaslo); // polaczenie z baza danych
-
+			conn = DriverManager.getConnection(url, userBazyDanych, userHaslo); 
 		} catch (SQLException e) {
 			System.out.println("Blad przy ladowaniu sterownika bazy!");
 			System.exit(1);
 		}
 		System.out.print(" polaczenie OK\n");
 
+		// ~~~~~~~~~~~~~~~~~~~~~~~ Koniec polaczenia ~~~~~~~~~~~~~~~~~~~~~~~//
+		
+		
+		
 		FakturaMenadzer f = new FakturaMenadzer();
 		KlientMenadzer k = new KlientMenadzer();
+		
 		s = f.dodanieFaktury(conn, s);
 		s = k.dodanieKlienta(conn, s);
 		f.wypisFaktury(conn, s);
@@ -51,7 +56,7 @@ public class JDBC {
 		
 
 
-		// ZAMYKANIE POLACZENIA Z BAZA
+		// Zamykanie polaczenia z baza danych
 
 		System.out.print("\nZamykanie polaczenia z baza:");
 		try {

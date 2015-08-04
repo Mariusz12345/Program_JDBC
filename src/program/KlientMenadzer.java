@@ -13,7 +13,7 @@ public class KlientMenadzer {
 		s = conn.createStatement();
 		conn.setAutoCommit(false);
 
-		String zapytanie = "INSERT INTO klient (imie,nazwisko)VALUES('v','v')";
+		String zapytanie = "INSERT INTO klient (imie,nazwisko)VALUES('f','f')";
 		s.execute(zapytanie);
 
 		conn.commit();
