@@ -44,20 +44,53 @@ public class JDBC {
 		// ~~~~~~~~~~~~~~~ Dodanie do bazy danych ~~~~~~~~~~~~
 		connetion.setAutoCommit(false);
 		s = connetion.createStatement();
-		connetion.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 
 		// String createTableFaktury = "CREATE TABLE faktury(id_faktury INTEGER
 		// PRIMARY KEY,nazwaFaktury VARCHAR )";
-		String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('c', 'c')";
-		s.execute(zapytanie);
-		connetion.commit();
-
-		connetion.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-		connetion.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+		//String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('j', 'j')";
+		//s.execute(zapytanie);
+		//connetion.commit();
 
 		// ~~~~~~~~~~~~~~ Koniec dodania ~~~~~~~~~~~~~~~~~~~
 
+		// pobieranie danych
 		
+		// uzycie tranzakcji UNCOMITTED pozwalajaca na odczyt danych przed wywolaniem metody commit
+		connetion.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+		System.out.println("Pobieranie danych z bazy:");
+		s = null;
+		try {
+			s = connetion.createStatement(); // tworzenie obiektu Statement przesylajacego zapytania do bazy conn
+			ResultSet r;
+			r = s.executeQuery("Select * from klient;"); // wykonanie kwerendy i  przeslanie wynikow do obiektu ResultSet
+			r.next(); // przejscie do kolejnego rekordu (wiersza) otrzymanych wynikow
+
+			ResultSetMetaData rsmd = r.getMetaData();
+			int numcols = rsmd.getColumnCount(); // pobieranie liczby kolumn
+
+			// wyswietlanie nazw kolumn:
+			for (int i = 1; i <= numcols; i++) {
+				System.out.print(rsmd.getColumnLabel(i) + "  |  ");
+			}
+			System.out.print("\n------------------------------------\n");
+
+			// wyswietlanie kolejnych rekordow:
+			while (r.next()) {
+				for (int i = 1; i <= numcols; i++) {
+					Object obj = r.getObject(i);
+					if (obj != null)
+						System.out.print(obj.toString() + " | ");
+					else
+						System.out.print(" ");
+				}
+				System.out.println();
+			}
+		} catch (SQLException e) {
+			System.out.println("Blad odczytu z bazy! " + e.toString());
+			System.exit(3);
+		}
+		
+		// koniec pobierania
 		
 
 		// ZAMYKANIE POLACZENIA Z BAZA
