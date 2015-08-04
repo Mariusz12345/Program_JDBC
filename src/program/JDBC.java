@@ -22,8 +22,7 @@ public class JDBC {
 		Statement s = null;
 		System.out.print("Sprawdzanie sterownika:");
 		try {
-			Class.forName(driver).newInstance(); // Zaladowanie sterownika do
-													// systemu
+			Class.forName(driver).newInstance(); // Zaladowanie sterownika do systemu
 		} catch (Exception e) {
 			System.out.println("Blad przy ladowaniu sterownika bazy!");
 			System.exit(1);
@@ -42,78 +41,31 @@ public class JDBC {
 		}
 		System.out.print(" polaczenie OK\n");
 
-		// ~~~~~~~~~~~~~~~ Dodanie do bazy danych ~~~~~~~~~~~~
 		
-		// ustawienie "connetion" na auto zeby moc samemu zatwierdzac transakcje
-		conn.setAutoCommit(false);
-		s = conn.createStatement();
-
-		// String createTableFaktury = "CREATE TABLE faktury(id_faktury INTEGER
-		// PRIMARY KEY,nazwaFaktury VARCHAR )";
-		String zapytanie = "INSERT INTO klient (imie, nazwisko) VALUES ('l', 'l')";
-		String zapytanie2 = "INSERT INTO faktury (id_faktury,nazwafaktury) VALUES ('19','nazwa4')";
-		s.execute(zapytanie);
-		s.execute(zapytanie2);
-		conn.commit();
-
-		// ~~~~~~~~~~~~~~ Koniec dodania ~~~~~~~~~~~~~~~~~~~
-
-		// Pobieranie danych
 		
-		// Uzycie tranzakcji UNCOMITTED pozwalajaca na odczyt danych przed wywolaniem metody commit
-		conn.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-		System.out.println("Pobieranie danych z bazy:");
-		s = null;
-		try {
-			s = conn.createStatement(); // tworzenie obiektu Statement przesylajacego zapytania do bazy conn
-			ResultSet r;
-			r = s.executeQuery("Select * from klient;"); // wykonanie kwerendy i  przeslanie wynikow do obiektu ResultSet
-			r.next(); // przejscie do kolejnego rekordu (wiersza) otrzymanych wynikow
+		s = FakturaMenadzer.dodanieFaktury(conn, s);
+		s = KlientMenadzer.dodanieKlienta(conn, s);
 
-			ResultSetMetaData rsmd = r.getMetaData();
-			int iloscikolumn = rsmd.getColumnCount(); // pobieranie liczby kolumn
 
-			// wyswietlanie nazw kolumn:
-			for (int i = 1; i <= iloscikolumn; i++) {
-				System.out.print(rsmd.getColumnLabel(i) + "  |  ");
-			}
-			System.out.print("\n------------------------------------\n");
-
-			// wyswietlanie kolejnych rekordow:
-			while (r.next()) {
-				for (int i = 1; i <= iloscikolumn; i++) {
-					Object obj = r.getObject(i);
-					if (obj != null)
-						System.out.print(obj.toString() + " | ");
-					else
-						System.out.print(" ");
-				}
-				System.out.println();
-			}
-		} catch (SQLException e) {
-			System.out.println("Blad odczytu z bazy! " + e.toString());
-			System.exit(3);
-		}
-		
-		// Koniec pobierania
 		
 		
 		// rollback i savepoint
-		
+
 		s = conn.createStatement();
-		
+
 		Savepoint save1 = conn.setSavepoint("INSERT_INTO");
-		String zapytanie3 = "INSERT INTO klient (imie,nazwisko) VALUES ('e','e')";
+		String zapytanie3 = "INSERT INTO klient (imie,nazwisko) VALUES ('d','d')";
 		s.executeUpdate(zapytanie3);
+
 		Savepoint save2 = conn.setSavepoint("INSERT_INTO2");
 		String zapytanie4 = "INSERT INTO faktury(id_faktury,nazwafaktury) VALUES ('10','poli')";
 		s.executeUpdate(zapytanie4);
+
 		conn.rollback(save2);
-		
+
 		conn.commit();
-		
+
 		// koniec rollback
-		
 
 		// ZAMYKANIE POLACZENIA Z BAZA
 
@@ -128,4 +80,5 @@ public class JDBC {
 		System.out.print(" zamkniecie OK");
 
 	}
+
 }
